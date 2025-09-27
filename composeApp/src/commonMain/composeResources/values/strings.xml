@@ -6,4 +6,10 @@
     <string name="favorites">Favorites</string>
     <string name="no_search_results">Nothing was found.</string>
     <string name="no_favorites">No favorite books. Add some.</string>
+    <string name="error_full_disk">Ooops, your disk is full</string>
+    <string name="error_unknown">Oops, something went wrong</string>
+    <string name="error_request_timeout">Oops, request timed out</string>
+    <string name="error_too_many_request">Oops, too many request</string>
+    <string name="error_serialization">Oops, error processing data</string>
+    <string name="error_no_internet">Oops, no internet</string>
 </resources>
