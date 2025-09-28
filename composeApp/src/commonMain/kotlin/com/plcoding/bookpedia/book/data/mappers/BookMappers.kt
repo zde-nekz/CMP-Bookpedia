@@ -12,7 +12,7 @@ fun SearchedBookDto.toBook(): Book {
     }
 
     return Book(
-        id = id,
+        id = id.substringAfterLast("/"),
         title = title,
         imageUrl = imageUrl,
         authors = authorNames ?: emptyList(),
