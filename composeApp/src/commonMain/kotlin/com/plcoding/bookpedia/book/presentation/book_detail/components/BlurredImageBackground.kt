@@ -10,12 +10,15 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -29,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -37,9 +41,12 @@ import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.book_cover
 import cmp_bookpedia.composeapp.generated.resources.book_error_2
 import cmp_bookpedia.composeapp.generated.resources.go_back
+import cmp_bookpedia.composeapp.generated.resources.mark_favorite
+import cmp_bookpedia.composeapp.generated.resources.remove_favorite
 import coil3.compose.rememberAsyncImagePainter
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
+import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -68,7 +75,7 @@ fun BlurredImageBackground(
         }
     )
 
-    Box {
+    Box(modifier = modifier) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
@@ -123,7 +130,7 @@ fun BlurredImageBackground(
 
             ElevatedCard(
                 modifier = Modifier
-                    .width(200.dp)
+                    .height(200.dp)
                     .aspectRatio(2 / 3f),
                 RoundedCornerShape(8.dp),
                 colors = CardDefaults.elevatedCardColors(
@@ -147,12 +154,31 @@ fun BlurredImageBackground(
                                 contentScale = ContentScale.Crop.takeIf { result.isSuccess }
                                     ?: ContentScale.Fit
                             )
+                            IconButton(
+                                onClick = onFavoriteClicked,
+                                modifier = Modifier
+                                    .align(Alignment.BottomEnd)
+                                    .background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(SandYellow, Color.Transparent),
+                                            radius = 70f
+                                        )
+                                    )
+                            ) {
+                                Icon(imageVector = Icons.Default.Favorite.takeIf { isFavorite }
+                                    ?: Icons.Default.FavoriteBorder,
+                                    contentDescription = stringResource(Res.string.remove_favorite.takeIf { isFavorite }
+                                        ?: Res.string.mark_favorite),
+                                    tint = Color.Red)
+                            }
                         }
                     }
 
                 }
 
             }
+
+            content()
         }
     }
 
