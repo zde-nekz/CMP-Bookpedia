@@ -3,6 +3,7 @@
 package com.plcoding.bookpedia.book.presentation.book_detail
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -11,13 +12,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +40,7 @@ import com.plcoding.bookpedia.book.presentation.book_detail.components.BlurredIm
 import com.plcoding.bookpedia.book.presentation.book_detail.components.BookChip
 import com.plcoding.bookpedia.book.presentation.book_detail.components.ChipSize
 import com.plcoding.bookpedia.book.presentation.book_detail.components.TitledContent
+import com.plcoding.bookpedia.core.presentation.PulseAnimation
 import com.plcoding.bookpedia.core.presentation.SandYellow
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
@@ -192,7 +194,13 @@ private fun ColumnScope.Synopsis(state: BookDetailState) {
     )
 
     if (state.isLoading) {
-        CircularProgressIndicator()
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            PulseAnimation(modifier = Modifier.size(100.dp))
+        }
+
     } else {
         Text(
             text = state.book?.description ?: stringResource(Res.string.description_not_available),
